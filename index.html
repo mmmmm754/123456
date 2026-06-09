@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>当宠物成为"家人" | 数据新闻</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --pink-50: #fdf2f4;
+  --pink-100: #fce4e8;
+  --pink-200: #f8cdd4;
+  --pink-300: #f2a5b2;
+  --pink-400: #e87384;
+  --pink-500: #d94b60;
+  --warm-50: #fefaf5;
+  --warm-100: #fdf0e3;
+  --warm-200: #fadcc0;
+  --warm-300: #f3be91;
+  --brown-600: #7c5c3e;
+  --brown-700: #5a4030;
+  --brown-800: #3d2c22;
+  --cream: #fdf8f0;
+  --sage-100: #e8efe5;
+  --sage-500: #7fa572;
+  --lavender-100: #eee8f5;
+  --shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  background: var(--cream);
+  color: var(--brown-800);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+.font-fun {
+  font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+}
+
+/* ========== HERO ========== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #fdf2f4 0%, #fefaf5 25%, #fdf8f0 50%, #f5ece8 75%, #f0e8e5 100%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Creative Polaroid collage */
+.hero-collage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-collage .polaroid {
+  position: absolute;
+  background: white;
+  padding: 10px 10px 36px 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  border-radius: 4px;
+  transition: transform 0.5s ease;
+  animation: polaroidFloat 6s ease-in-out infinite;
+}
+
+.hero-collage .polaroid {
+  position: absolute;
+  background: white;
+  padding: 8px 8px 32px 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  border-radius: 4px;
+  transition: transform 0.5s ease;
+  animation: polaroidFloat 5s ease-in-out infinite;
+}
+
+.hero-collage .polaroid:nth-child(1) {
+  width: clamp(140px, 22vw, 280px);
+  top: 3%;
+  left: 2%;
+  transform: rotate(-7deg);
+  animation-delay: 0s;
+}
+
+.hero-collage .polaroid:nth-child(2) {
+  width: clamp(100px, 15vw, 180px);
+  bottom: 5%;
+  left: 5%;
+  transform: rotate(6deg);
+  animation-delay: 1.2s;
+}
+
+.hero-collage .polaroid:nth-child(3) {
+  width: clamp(150px, 24vw, 300px);
+  top: 2%;
+  right: 2%;
+  transform: rotate(4deg);
+  animation-delay: 0.4s;
+}
+
+.hero-collage .polaroid:nth-child(4) {
+  width: clamp(90px, 13vw, 160px);
+  bottom: 6%;
+  right: 5%;
+  transform: rotate(-8deg);
+  animation-delay: 1.8s;
+}
+
+.hero-collage .polaroid:nth-child(5) {
+  width: clamp(110px, 17vw, 210px);
+  top: 44%;
+  left: 0.5%;
+  transform: rotate(11deg);
+  animation-delay: 2.2s;
+}
+
+.hero-collage .polaroid:nth-child(6) {
+  width: clamp(100px, 16vw, 200px);
+  top: 45%;
+  right: 0.5%;
+  transform: rotate(-10deg);
+  animation-delay: 2.6s;
+}
+
+@keyframes polaroidFloat {
+  0%, 100% { transform: var(--rot); }
+  50% { transform: var(--rot) translateY(-8px); }
+}
+
+.hero-collage .polaroid:nth-child(1) { --rot: rotate(-8deg); }
+.hero-collage .polaroid:nth-child(2) { --rot: rotate(5deg); }
+.hero-collage .polaroid:nth-child(3) { --rot: rotate(6deg); }
+.hero-collage .polaroid:nth-child(4) { --rot: rotate(-7deg); }
+.hero-collage .polaroid:nth-child(5) { --rot: rotate(12deg); }
+.hero-collage .polaroid:nth-child(6) { --rot: rotate(-10deg); }
+
+.hero-collage .polaroid img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 2.5rem 2rem;
+}
+
+.hero-content .hero-badge {
+  display: inline-block;
+  padding: 0.4rem 1.4rem;
+  background: rgba(217, 75, 96, 0.1);
+  border: 1px solid rgba(217, 75, 96, 0.25);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  color: var(--pink-500);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(4px);
+}
+
+.hero-content h1 {
+  font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--brown-700);
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+.hero-content h1 .highlight {
+  background: linear-gradient(135deg, var(--pink-400), var(--pink-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-content .hero-sub {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: var(--brown-600);
+  line-height: 1.9;
+  margin: 0 auto 2.2rem;
+  opacity: 0.8;
+  max-width: 520px;
+}
+
+.hero-content .hero-stat-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-content .hero-stat-item { text-align: center; }
+
+.hero-content .hero-stat-number {
+  font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+  font-size: 2.2rem;
+  color: var(--pink-500);
+  line-height: 1.15;
+}
+
+.hero-content .hero-stat-number .unit { font-size: 0.9rem; }
+
+.hero-content .hero-stat-label {
+  font-size: 0.8rem;
+  color: var(--brown-600);
+  opacity: 0.6;
+  margin-top: 0.1rem;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--brown-600);
+  opacity: 0.3;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.scroll-hint .arrow { width: 1.5px; height: 24px; background: var(--brown-600); position: relative; }
+.scroll-hint .arrow::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-right: 1.5px solid var(--brown-600);
+  border-bottom: 1.5px solid var(--brown-600);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+
+
+/* ========== GENERAL ========== */
+.section {
+  padding: 5rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pink-400);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.section-title {
+  font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--brown-700);
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.section-desc {
+  font-size: 1rem;
+  color: var(--brown-600);
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.8;
+}
+
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pink-300), var(--pink-400));
+  border-radius: 2px;
+  margin: 1rem auto 0;
+}
+
+/* ========== STORY INTRO ========== */
+.story-intro {
+  padding: 4rem 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.story-intro p {
+  font-size: 1.05rem;
+  line-height: 2;
+  color: var(--brown-700);
+  margin-bottom: 1.8rem;
+  text-indent: 2em;
+}
+
+.story-intro .pull-quote {
+  font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--pink-500);
+  text-align: center;
+  padding: 1.8rem 1rem;
+  margin: 2rem 0;
+  border-top: 2px solid var(--pink-100);
+  border-bottom: 2px solid var(--pink-100);
+  text-indent: 0;
+  line-height: 1.6;
+}
+
+/* ========== DATA CARDS ========== */
+.data-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.data-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.data-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.08);
+}
+
+.data-card .card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.data-card .card-number {
+  font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 0.3rem;
+}
+
+.data-card .card-number .unit { font-size: 1rem; font-weight: 600; }
+
+.data-card .card-label {
+  font-size: 0.95rem;
+  color: var(--brown-600);
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
+}
+
+.data-card .card-note {
+  font-size: 0.8rem;
+  color: var(--brown-600);
+  opacity: 0.6;
+  line-height: 1.5;
+}
+
+.card-pink .card-icon { background: var(--pink-100); color: var(--pink-500); }
+.card-pink .card-number { color: var(--pink-500); }
+.card-sage .card-icon { background: var(--sage-100); color: var(--sage-500); }
+.card-sage .card-number { color: var(--sage-500); }
+.card-lavender .card-icon { background: var(--lavender-100); color: #9b7fc1; }
+.card-lavender .card-number { color: #9b7fc1; }
+.card-warm .card-icon { background: var(--warm-200); color: #c4905a; }
+.card-warm .card-number { color: #c4905a; }
+
+/* ========== CHART CONTAINER ========== */
+.chart-container {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  margin: 2.5rem 0;
+  position: relative;
+}
+
+.chart-container .chart-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--brown-700);
+  margin-bottom: 0.3rem;
+}
+
+.chart-container .chart-sub {
+  font-size: 0.85rem;
+  color: var(--brown-600);
+  opacity: 0.6;
+  margin-bottom: 1.5rem;
+}
+
+.chart-wrapper { position: relative; width: 100%; max-height: 400px; }
+.chart-wrapper.tall { max-height: 500px; }
+.chart-wrapper.short { max-height: 300px; }
+
+/* ========== IMAGE BREAK SECTIONS ========== */
+.image-break {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 2rem 1.5rem;
+  background: white;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.image-break .img-frame {
+  flex: 0 0 38%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  background: linear-gradient(135deg, var(--pink-50), var(--warm-50), var(--cream));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  max-height: 380px;
+  padding: 0.75rem;
+}
+
+.image-break .img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.image-break .break-text {
+  flex: 1;
+  padding: 0.5rem 0;
+}
+
+.image-break .break-text .break-quote-mark {
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--pink-200);
+  font-family: Georgia, serif;
+  margin-bottom: -0.5rem;
+}
+
+.image-break .break-text p {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--brown-700);
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+}
+
+.image-break .break-text .break-source {
+  font-size: 0.85rem;
+  color: var(--brown-600);
+  opacity: 0.5;
+}
+
+/* Alternate: image on right */
+.image-break.alt {
+  flex-direction: row-reverse;
+}
+
+/* ========== EMOTIONAL SPOTLIGHT ========== */
+.spotlight-section {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--pink-50) 50%, var(--cream) 100%);
+  padding: 5rem 1.5rem;
+}
+
+.spotlight-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.spotlight-item {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.spotlight-item:hover { transform: translateY(-4px); }
+
+.spotlight-item .emoji-big { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+.spotlight-item h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--brown-700);
+  margin-bottom: 0.5rem;
+}
+
+.spotlight-item .big-num {
+  font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  color: var(--pink-500);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.spotlight-item p {
+  font-size: 0.9rem;
+  color: var(--brown-600);
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+/* ========== CHART ROW ========== */
+.chart-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+
+/* ========== TIMELINE ========== */
+.timeline { margin: 3rem 0; position: relative; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--pink-200), var(--pink-300), var(--pink-200));
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.timeline-item:nth-child(odd) { flex-direction: row; }
+.timeline-item:nth-child(even) { flex-direction: row-reverse; }
+
+.timeline-item .tl-content {
+  width: calc(50% - 2rem);
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.timeline-item .tl-dot {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--pink-300);
+  border: 3px solid white;
+  box-shadow: 0 0 0 3px var(--pink-200);
+  top: 1.5rem;
+}
+
+.timeline-item .tl-year {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--pink-500);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-item .tl-text {
+  font-size: 0.92rem;
+  color: var(--brown-600);
+  line-height: 1.7;
+}
+
+/* ========== SOURCES ========== */
+.sources-section {
+  background: var(--brown-800);
+  color: rgba(255,255,255,0.8);
+  padding: 4rem 1.5rem;
+}
+
+.sources-section .section-title { color: white; }
+.sources-section .section-desc { color: rgba(255,255,255,0.6); }
+.sources-section .section-divider { background: linear-gradient(90deg, var(--pink-300), var(--pink-400)); }
+
+.sources-list {
+  max-width: 800px;
+  margin: 2rem auto 0;
+  list-style: none;
+}
+
+.sources-list li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.sources-list li .source-num { color: var(--pink-300); font-weight: 600; min-width: 2rem; }
+
+.sources-list li a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+  word-break: break-all;
+}
+
+.sources-list li a:hover { color: var(--pink-300); }
+
+.source-note {
+  max-width: 800px;
+  margin: 2rem auto 0;
+  font-size: 0.8rem;
+  opacity: 0.5;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  background: var(--brown-800);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.8rem;
+}
+
+/* ========== SCROLL ANIMATIONS ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+.chart-reveal {
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.chart-reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+/* ========== BENTO GRID ========== */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 2.5rem 0;
+}
+
+.bento-item {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.bento-item:hover { transform: translateY(-3px); }
+
+.bento-item .bento-num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.bento-item .bento-label {
+  font-size: 0.82rem;
+  color: var(--brown-600);
+  opacity: 0.7;
+  margin-top: 0.3rem;
+}
+
+.bento-item:nth-child(1) { grid-column: span 2; }
+.bento-item:nth-child(2) { grid-column: span 2; }
+.bento-item:nth-child(3) { grid-column: span 1; }
+.bento-item:nth-child(4) { grid-column: span 1; }
+.bento-item:nth-child(5) { grid-column: span 1; }
+.bento-item:nth-child(6) { grid-column: span 1; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .hero { min-height: auto; padding: 4rem 1rem 3rem; }
+  .hero-content { padding: 1.5rem 1rem; }
+  .hero-content h1 { font-size: 2.4rem; }
+  .hero-content .hero-stat-number { font-size: 1.6rem; }
+  .hero-content .hero-stat-row { gap: 1rem; }
+  .hero-collage .polaroid:nth-child(2),
+  .hero-collage .polaroid:nth-child(4),
+  .hero-collage .polaroid:nth-child(5),
+  .hero-collage .polaroid:nth-child(6) { display: none; }
+  .hero-collage .polaroid:nth-child(1) { width: 30vw; max-width: 150px; min-width: 80px; top: 2%; left: 2%; }
+  .hero-collage .polaroid:nth-child(3) { width: 30vw; max-width: 150px; min-width: 80px; top: 2%; right: 2%; display: block; }
+  .scroll-hint { display: none; }
+  .section { padding: 3rem 1.2rem; }
+  .data-row { grid-template-columns: 1fr; }
+  .chart-row { grid-template-columns: 1fr; }
+  .spotlight-grid { grid-template-columns: 1fr; }
+  .timeline::before { left: 20px; }
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) { flex-direction: row; padding-left: 3rem; }
+  .timeline-item .tl-content { width: 100%; }
+  .timeline-item .tl-dot { left: 20px; }
+  .image-break { flex-direction: column !important; gap: 1.2rem; padding: 1.5rem; margin: 1.5rem 1rem; }
+  .image-break .img-frame { flex: none; width: 100%; min-height: 200px; max-height: 300px; }
+  .image-break .break-text p { font-size: 1rem; }
+  .bento-grid { grid-template-columns: 1fr 1fr; }
+  .bento-item:nth-child(1),
+  .bento-item:nth-child(2),
+  .bento-item:nth-child(3),
+  .bento-item:nth-child(4),
+  .bento-item:nth-child(5),
+  .bento-item:nth-child(6) { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-collage">
+    <div class="polaroid"><img src="images/hero_image6.jpg" alt="可爱的猫咪" loading="lazy"></div>
+    <div class="polaroid"><img src="images/hero_image2.jpg" alt="萌宠合影" loading="lazy"></div>
+    <div class="polaroid"><img src="images/hero_image11.jpg" alt="温馨狗狗" loading="lazy"></div>
+    <div class="polaroid"><img src="images/hero_image7.jpg" alt="猫咪特写" loading="lazy"></div>
+    <div class="polaroid"><img src="images/hero_image1.jpg" alt="狗狗微笑" loading="lazy"></div>
+    <div class="polaroid"><img src="images/hero_image10.jpg" alt="宠物日常" loading="lazy"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">数据新闻 · 2025</div>
+    <h1>当宠物成为<br><span class="highlight">"家人"</span></h1>
+    <p class="hero-sub">它们不再是看门狗或捕鼠猫——它们是孩子、是伙伴、是孤独生活中最温暖的陪伴。一组数据，讲述中国人与宠物之间的情感纽带。</p>
+    <div class="hero-stat-row">
+      <div class="hero-stat-item">
+        <div class="hero-stat-number">1.26<span class="unit">亿只</span></div>
+        <div class="hero-stat-label">城镇犬猫总量</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-number">3126<span class="unit">亿元</span></div>
+        <div class="hero-stat-label">宠物消费市场规模</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-number">59.33<span class="unit">%</span></div>
+        <div class="hero-stat-label">视宠物为家人</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="arrow"></div>
+    <span>向下滚动</span>
+  </div>
+</section>
+
+<!-- ========== STORY INTRO ========== -->
+<div class="story-intro reveal">
+  <p>深夜十一点，刚下班的林悦打开家门，一只橘猫喵喵叫着蹭到她脚边。她蹲下来抱住这个毛茸茸的小生命，一整天的疲惫在这一刻消融。"有时候觉得不是我养它，是它在陪我。"林悦说。</p>
+  <p>这样的故事，正在千千万万个中国家庭里上演。2025年，中国城镇宠物犬猫数量突破<span style="color:var(--pink-500);font-weight:700;">1.26亿只</span>，相当于每11个中国人里就有1只宠物。而在这庞大的数字背后，是一个更深层的社会变迁——宠物正在从"动物"变成"家人"。</p>
+  <div class="pull-quote">"59.33%的养宠人将宠物视为自己的孩子，27.95%视为亲密伙伴——仅8.87%仍仅视其为动物。"</div>
+  <p>为什么越来越多的人把宠物当作家人？数据为我们揭示了答案：这背后是独居经济的崛起、情感消费的升级，以及一代年轻人对亲密关系的新定义。</p>
+</div>
+
+<!-- ========== SECTION: THE BIG PICTURE ========== -->
+<section class="section reveal">
+  <div class="section-header">
+    <div class="section-tag">Part 1</div>
+    <h2 class="section-title">万亿级"它经济"崛起</h2>
+    <p class="section-desc">宠物不再只是消遣，而是一个快速增长的经济引擎</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="bento-grid">
+    <div class="bento-item reveal reveal-delay-1">
+      <div class="bento-num" style="color:var(--pink-500)">1.26<span style="font-size:1rem">亿只</span></div>
+      <div class="bento-label">2025年城镇犬猫总数</div>
+    </div>
+    <div class="bento-item reveal reveal-delay-2">
+      <div class="bento-num" style="color:var(--pink-500)">3126<span style="font-size:1rem">亿元</span></div>
+      <div class="bento-label">宠物消费市场规模</div>
+    </div>
+    <div class="bento-item reveal reveal-delay-3">
+      <div class="bento-num" style="color:var(--sage-500)">8114<span style="font-size:1rem">亿元</span></div>
+      <div class="bento-label">宠物经济产业总规模</div>
+    </div>
+    <div class="bento-item reveal reveal-delay-3">
+      <div class="bento-num" style="color:var(--pink-400)">4.1<span style="font-size:1rem">%</span></div>
+      <div class="bento-label">市场规模年同比增长</div>
+    </div>
+    <div class="bento-item reveal reveal-delay-4">
+      <div class="bento-num" style="color:#9b7fc1">1<span style="font-size:1rem">万亿</span></div>
+      <div class="bento-label">2027年预计突破</div>
+    </div>
+    <div class="bento-item reveal reveal-delay-4">
+      <div class="bento-num" style="color:var(--pink-500)">犬1606亿</div>
+      <div class="bento-label">犬猫消费市场分配</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">宠物消费市场规模增长趋势</div>
+      <div class="chart-sub">2019-2025年中国宠物消费市场规模（亿元）</div>
+      <div class="chart-wrapper tall">
+        <canvas id="marketTrendChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">犬猫消费市场对比</div>
+      <div class="chart-sub">2025年犬猫消费金额（亿元）</div>
+      <div class="chart-wrapper">
+        <canvas id="dogCatMarketChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-row">
+    <div class="data-card card-pink reveal reveal-delay-1">
+      <div class="card-icon">&#x1F415;</div>
+      <div class="card-number">3006<span class="unit">元</span></div>
+      <div class="card-label">单只犬年均消费</div>
+      <div class="card-note">2025年数据，创历史新高</div>
+    </div>
+    <div class="data-card card-sage reveal reveal-delay-2">
+      <div class="card-icon">&#x1F431;</div>
+      <div class="card-number">2085<span class="unit">元</span></div>
+      <div class="card-label">单只猫年均消费</div>
+      <div class="card-note">2025年数据，创历史新高</div>
+    </div>
+    <div class="data-card card-warm reveal reveal-delay-3">
+      <div class="card-icon">&#x1F4C8;</div>
+      <div class="card-number">8114<span class="unit">亿元</span></div>
+      <div class="card-label">宠物经济产业总规模</div>
+      <div class="card-note">预计2027年突破万亿元大关</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== IMAGE BREAK 1 ========== -->
+<div class="image-break">
+  <div class="img-frame">
+    <img src="images/break_image12.jpg" alt="猫与人的温馨时刻" loading="lazy">
+  </div>
+  <div class="break-text">
+    <div class="break-quote-mark">"</div>
+    <p>它不会说话，但它什么都懂。它用一生陪伴我，我能做的就是给它最好的。</p>
+    <div class="break-source">—— 一位养宠者的心声</div>
+  </div>
+</div>
+
+<!-- ========== SECTION: WHO OWNS PETS ========== -->
+<section class="section reveal">
+  <div class="section-header">
+    <div class="section-tag">Part 2</div>
+    <h2 class="section-title">谁在养宠物？</h2>
+    <p class="section-desc">年轻人正在成为宠物经济的主力军</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">养宠人群年龄分布</div>
+      <div class="chart-sub">各年龄段养宠者占比</div>
+      <div class="chart-wrapper short">
+        <canvas id="ageChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">养宠人群画像</div>
+      <div class="chart-sub">年龄与职业特征</div>
+      <div class="chart-wrapper short">
+        <canvas id="profileChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-row">
+    <div class="data-card card-pink reveal reveal-delay-1">
+      <div class="card-icon">&#x1F469;&#x200D;&#x1F4BB;</div>
+      <div class="card-number">42.7<span class="unit">%</span></div>
+      <div class="card-label">90后养宠者占比</div>
+      <div class="card-note">最大的养宠人群世代</div>
+    </div>
+    <div class="data-card card-lavender reveal reveal-delay-2">
+      <div class="card-icon">&#x1F467;</div>
+      <div class="card-number">26.3<span class="unit">%</span></div>
+      <div class="card-label">00后养宠者占比</div>
+      <div class="card-note">正在快速增长的新生代</div>
+    </div>
+    <div class="data-card card-warm reveal reveal-delay-3">
+      <div class="card-icon">&#x1F469;</div>
+      <div class="card-number">77<span class="unit">%</span></div>
+      <div class="card-label">养宠人群为女性</div>
+      <div class="card-note">其中73%为20-30岁年轻人</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== IMAGE BREAK 2 ========== -->
+<div class="image-break alt">
+  <div class="img-frame">
+    <img src="images/break_image4.jpg" alt="人与狗" loading="lazy">
+  </div>
+  <div class="break-text">
+    <div class="break-quote-mark">"</div>
+    <p>90后、00后合计占养宠人群近70%——他们用宠物填补生活缝隙，也用消费表达爱意。</p>
+    <div class="break-source">—— 2026年中国宠物行业白皮书</div>
+  </div>
+</div>
+
+<!-- ========== EMOTIONAL SPOTLIGHT ========== -->
+<section class="spotlight-section reveal">
+  <div class="section-header">
+    <div class="section-tag">Part 3</div>
+    <h2 class="section-title" style="color:var(--brown-700)">宠物即家人：情感的数据证明</h2>
+    <p class="section-desc">它们在我们心中的位置，比我们想象的更重要</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="spotlight-grid">
+    <div class="spotlight-item reveal reveal-delay-1">
+      <span class="emoji-big">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466;</span>
+      <div class="big-num">59.33%</div>
+      <h4>视宠物为"孩子"</h4>
+      <p>超过一半的养宠者将宠物当作自己的孩子来对待和疼爱</p>
+    </div>
+    <div class="spotlight-item reveal reveal-delay-2">
+      <span class="emoji-big">&#x1F91D;</span>
+      <div class="big-num">27.95%</div>
+      <h4>视宠物为"伙伴"</h4>
+      <p>近三成养宠者将宠物视为平等的生活伴侣</p>
+    </div>
+    <div class="spotlight-item reveal reveal-delay-3">
+      <span class="emoji-big">&#x1F49A;</span>
+      <div class="big-num">12.18%</div>
+      <h4>合计视为家人/伙伴</h4>
+      <p>仅8.87%的养宠者仍将宠物仅视为动物</p>
+    </div>
+  </div>
+
+  <div class="chart-container chart-reveal" style="max-width:550px;margin:2.5rem auto;">
+    <div class="chart-title">宠物在主人心中的身份定位</div>
+    <div class="chart-sub">养宠者如何看待自己的宠物</div>
+    <div class="chart-wrapper short">
+      <canvas id="identityChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ========== IMAGE BREAK 3 ========== -->
+<div class="image-break">
+  <div class="img-frame">
+    <img src="images/break_image3.jpg" alt="猫" loading="lazy">
+  </div>
+  <div class="break-text">
+    <div class="break-quote-mark">"</div>
+    <p>宠物殡葬服务规模预计达50亿元——告别也需要仪式感。</p>
+    <div class="break-source">—— 毕马威中国宠物行业报告</div>
+  </div>
+</div>
+
+<!-- ========== SECTION: SPENDING ========== -->
+<section class="section reveal">
+  <div class="section-header">
+    <div class="section-tag">Part 4</div>
+    <h2 class="section-title">为爱消费：宠物食品升级</h2>
+    <p class="section-desc">从吃饱到吃好，宠物食品正在经历一场革命</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">宠物食品消费关注因素</div>
+      <div class="chart-sub">宠主在选购宠物食品时最关心什么</div>
+      <div class="chart-wrapper short">
+        <canvas id="foodConcernChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">鲜粮选择趋势</div>
+      <div class="chart-sub">39.2%的宠主选择鲜粮作为宠物食品</div>
+      <div class="chart-wrapper short">
+        <canvas id="freshFoodChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="tl-content">
+        <div class="tl-year">53.7%</div>
+        <div class="tl-text">食品仍占宠物消费市场最大份额，超过一半的宠物消费支出用于食品</div>
+      </div>
+      <div class="tl-dot"></div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="tl-content">
+        <div class="tl-year">70.8%</div>
+        <div class="tl-text">宠主首要关注"食材新鲜度"——宠物食品正在向人类食品标准看齐</div>
+      </div>
+      <div class="tl-dot"></div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="tl-content">
+        <div class="tl-year">39.2%</div>
+        <div class="tl-text">选择"新鲜健康"作为购买鲜粮的主要原因——宠物健康超越便利性成为第一考量</div>
+      </div>
+      <div class="tl-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION: SINGLE ECONOMY ========== -->
+<section class="spotlight-section reveal">
+  <div class="section-header">
+    <div class="section-tag">Part 5</div>
+    <h2 class="section-title" style="color:var(--brown-700)">独居与陪伴：宠物经济的情感底色</h2>
+    <p class="section-desc">宠物填补了现代都市人的情感空白</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">一线城市养宠者婚姻状况</div>
+      <div class="chart-sub">单身养宠者与家庭养宠者对比</div>
+      <div class="chart-wrapper short">
+        <canvas id="singleChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">月均宠物支出对比</div>
+      <div class="chart-sub">单身养宠者 vs 家庭养宠者</div>
+      <div class="chart-wrapper short">
+        <canvas id="spendingChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-row">
+    <div class="data-card card-pink reveal reveal-delay-1">
+      <div class="card-icon">&#x1F3E0;</div>
+      <div class="card-number">41<span class="unit">%</span></div>
+      <div class="card-label">一线城市单身养宠者占比</div>
+      <div class="card-note">宠物成为独居生活的重要情感陪伴</div>
+    </div>
+    <div class="data-card card-warm reveal reveal-delay-2">
+      <div class="card-icon">&#x1F4B0;</div>
+      <div class="card-number">1.8<span class="unit">倍</span></div>
+      <div class="card-label">单身月均支出 vs 家庭</div>
+      <div class="card-note">单身养宠者在宠物上的花费远超家庭用户</div>
+    </div>
+    <div class="data-card card-sage reveal reveal-delay-3">
+      <div class="card-icon">&#x1F4CA;</div>
+      <div class="card-number">180<span class="unit">%</span></div>
+      <div class="card-label">宠物医疗险投保增长</div>
+      <div class="card-note">众安保险宠物医疗险投保量同比增长</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== IMAGE BREAK 4 ========== -->
+<div class="image-break alt">
+  <div class="img-frame">
+    <img src="images/break_image9.jpg" alt="狗" loading="lazy">
+  </div>
+  <div class="break-text">
+    <div class="break-quote-mark">"</div>
+    <p>宠物保险渗透率不足1%，但增速超50%——给毛孩子买份医保正在成为新趋势。</p>
+    <div class="break-source">—— 众安保险公开数据</div>
+  </div>
+</div>
+
+<!-- ========== SECTION: CAT VS DOG ========== -->
+<section class="section reveal">
+  <div class="section-header">
+    <div class="section-tag">Part 6</div>
+    <h2 class="section-title">猫 vs 狗：谁主沉浮？</h2>
+    <p class="section-desc">猫经济正在快速追赶，预计2028年实现反超</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">2025年猫狗数量对比</div>
+      <div class="chart-sub">城镇猫数量 vs 狗数量（万只）</div>
+      <div class="chart-wrapper short">
+        <canvas id="catDogCountChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-container chart-reveal">
+      <div class="chart-title">猫狗市场增速对比</div>
+      <div class="chart-sub">年度同比增长率</div>
+      <div class="chart-wrapper short">
+        <canvas id="growthChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-row">
+    <div class="data-card card-sage reveal reveal-delay-1">
+      <div class="card-icon">&#x1F431;</div>
+      <div class="card-number">7289<span class="unit">万只</span></div>
+      <div class="card-label">2025年城镇猫数量</div>
+      <div class="card-note">同比增长5.2%</div>
+    </div>
+    <div class="data-card card-warm reveal reveal-delay-2">
+      <div class="card-icon">&#x1F415;</div>
+      <div class="card-number">5343<span class="unit">万只</span></div>
+      <div class="card-label">2025年城镇狗数量</div>
+      <div class="card-note">同比增长3.2%</div>
+    </div>
+    <div class="data-card card-pink reveal reveal-delay-3">
+      <div class="card-icon">&#x1F52E;</div>
+      <div class="card-number">2028</div>
+      <div class="card-label">预计猫消费反超狗</div>
+      <div class="card-note">猫市场增速持续领先，预计2028年实现反超</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION: NEW CONSUMPTION ========== -->
+<section class="spotlight-section reveal">
+  <div class="section-header">
+    <div class="section-tag">Part 7</div>
+    <h2 class="section-title" style="color:var(--brown-700)">情感消费新场景</h2>
+    <p class="section-desc">从生前到身后，宠物经济正在全面延伸</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="spotlight-grid">
+    <div class="spotlight-item reveal reveal-delay-1">
+      <span class="emoji-big">&#x1F3E5;</span>
+      <div class="big-num">50<span style="font-size:1.2rem;font-weight:400"> 亿元</span></div>
+      <h4>宠物殡葬服务规模</h4>
+      <p>2025年宠物殡葬市场规模预计达50亿元，宠物告别越来越有仪式感</p>
+    </div>
+    <div class="spotlight-item reveal reveal-delay-2">
+      <span class="emoji-big">&#x1F6E1;</span>
+      <div class="big-num">&lt;1<span style="font-size:1.2rem;font-weight:400">%</span></div>
+      <h4>宠物保险渗透率</h4>
+      <p>目前渗透率不足1%，但增速超50%，发展空间巨大</p>
+    </div>
+    <div class="spotlight-item reveal reveal-delay-3">
+      <span class="emoji-big">&#x1F4C8;</span>
+      <div class="big-num">+180<span style="font-size:1.2rem;font-weight:400">%</span></div>
+      <h4>宠物医疗险投保增长</h4>
+      <p>众安保险"宠物医疗险"投保量同比增长180%，宠物健康备受关注</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== IMAGE BREAK 5 ========== -->
+<div class="image-break">
+  <div class="img-frame">
+    <img src="images/break_image8.jpg" alt="人与宠物" loading="lazy">
+  </div>
+  <div class="break-text">
+    <div class="break-quote-mark">"</div>
+    <p>它们用一生陪伴我们，而我们能用数据讲述这个关于爱与陪伴的故事。</p>
+    <div class="break-source">—— 数据新闻编辑</div>
+  </div>
+</div>
+
+<!-- ========== CONCLUSION ========== -->
+<section class="section reveal" style="text-align:center;">
+  <div class="section-header">
+    <h2 class="section-title">结语</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div style="max-width:700px;margin:0 auto;text-align:left;">
+    <p style="font-size:1.05rem;line-height:2;color:var(--brown-700);margin-bottom:1.8rem;text-indent:2em;">从1.26亿只宠物到3126亿元市场规模，从59.33%的"家人"认同到180%的保险增长——这些数据背后，是中国人情感结构的一次深刻转型。</p>
+    <p style="font-size:1.05rem;line-height:2;color:var(--brown-700);margin-bottom:1.8rem;text-indent:2em;">在独居成为常态、原子化社会加速的今天，宠物填补了人与人之间的情感真空。它们不会说话却最懂陪伴，不会表达却最忠诚。当我们说宠物是"家人"时，我们其实是在说：爱不需要语言，陪伴就是最长情的告白。</p>
+    <div class="pull-quote" style="font-size:1.2rem;">每一只宠物都是一个家人，每一个数据都是一份爱的证明。</div>
+  </div>
+</section>
+
+<!-- ========== SOURCES ========== -->
+<section class="sources-section">
+  <div class="section-header">
+    <div class="section-tag">数据来源</div>
+    <h2 class="section-title">参考文献与数据来源</h2>
+    <p class="section-desc">本文数据来源于以下权威机构报告及公开资料</p>
+    <div class="section-divider"></div>
+  </div>
+  <ul class="sources-list">
+    <li><span class="source-num">[1]</span> 《2026年中国宠物行业白皮书（消费报告）》 — <a href="https://business.cctv.com/2026/01/05/ARTIdmv2AWmVeRVodaZYLOvQ260105.shtml" target="_blank" rel="noopener">https://business.cctv.com/2026/01/05/ARTIdmv2AWmVeRVodaZYLOvQ260105.shtml</a></li>
+    <li><span class="source-num">[2]</span> 艾媒咨询 — <a href="https://www.iimedia.cn/c400/106354.html" target="_blank" rel="noopener">https://www.iimedia.cn/c400/106354.html</a></li>
+    <li><span class="source-num">[3]</span> 《2026宠物行业趋势报告》（Flywheel飞未） — <a href="https://www.sohu.com/a/1007805933_649823" target="_blank" rel="noopener">https://www.sohu.com/a/1007805933_649823</a></li>
+    <li><span class="source-num">[4]</span> 《中国品牌》杂志社·中国品牌研究院调研 — <a href="https://www.cbrand.com.cn/content-12-32840-1.html" target="_blank" rel="noopener">https://www.cbrand.com.cn/content-12-32840-1.html</a></li>
+    <li><span class="source-num">[5]</span> 毕马威中国《2025年中国宠物行业市场报告》 — <a href="https://assets.kpmg.com/content/dam/kpmg/cn/pdf/zh/2025/06/2025-china-pet-industry-market-report.pdf" target="_blank" rel="noopener">https://assets.kpmg.com/content/dam/kpmg/cn/pdf/zh/2025/06/2025-china-pet-industry-market-report.pdf</a></li>
+    <li><span class="source-num">[6]</span> 众安保险公开数据（宠物医疗险投保数据）</li>
+    <li><span class="source-num">[7]</span> 补充数据：全球宠物市场趋势分析（Euromonitor International, 2025）</li>
+  </ul>
+  <p class="source-note">本作品中的数据均来自公开可查的权威行业报告及学术研究，所有数据截至2025-2026年。部分图片来自文档素材，仅用于数据新闻展示。</p>
+</section>
+
+<footer class="footer">
+  <p>当宠物成为"家人" · 数据新闻 · 2025</p>
+</footer>
+
+<script>
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal, .chart-reveal').forEach(el => observer.observe(el));
+
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+Chart.defaults.font.size = 12;
+
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: true,
+  plugins: {
+    legend: { labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } },
+    tooltip: {
+      backgroundColor: 'rgba(61,44,34,0.9)',
+      titleFont: { size: 13 },
+      bodyFont: { size: 12 },
+      padding: 12,
+      cornerRadius: 8,
+      displayColors: true,
+    }
+  }
+};
+
+const pink500 = '#d94b60';
+const pink200 = '#f8cdd4';
+const sage500 = '#7fa572';
+const sage300 = '#b8d0b0';
+const lavender = '#9b7fc1';
+const warm = '#c4905a';
+
+// 1. Market Trend
+new Chart(document.getElementById('marketTrendChart'), {
+  type: 'line',
+  data: {
+    labels: ['2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+    datasets: [{
+      label: '宠物消费市场规模（亿元）',
+      data: [2024, 2065, 2490, 2706, 2870, 3003, 3126],
+      borderColor: pink500,
+      backgroundColor: (ctx) => {
+        const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 400);
+        g.addColorStop(0, pink500 + '33');
+        g.addColorStop(1, pink500 + '00');
+        return g;
+      },
+      fill: true, tension: 0.4,
+      pointBackgroundColor: pink500, pointBorderColor: 'white', pointBorderWidth: 2,
+      pointRadius: 5, pointHoverRadius: 7, borderWidth: 3,
+    }]
+  },
+  options: { ...chartOptions }
+});
+
+// 2. Dog vs Cat Market
+new Chart(document.getElementById('dogCatMarketChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['犬消费', '猫消费'],
+    datasets: [{
+      data: [1606, 1520],
+      backgroundColor: [warm, sage500],
+      borderColor: 'white', borderWidth: 3, hoverOffset: 8,
+    }]
+  },
+  options: { ...chartOptions, cutout: '60%', plugins: { ...chartOptions.plugins, legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } } } }
+});
+
+// 3. Age Distribution
+new Chart(document.getElementById('ageChart'), {
+  type: 'bar',
+  data: {
+    labels: ['90后', '00后', '80后', '其他'],
+    datasets: [{
+      label: '占比 (%)',
+      data: [42.7, 26.3, 24.5, 6.5],
+      backgroundColor: [pink500, sage500, lavender, pink200],
+      borderRadius: 6, barThickness: 50,
+    }]
+  },
+  options: { ...chartOptions, indexAxis: 'y', scales: { x: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true } }, plugins: { ...chartOptions.plugins, legend: { display: false } } }
+});
+
+// 4. Profile
+new Chart(document.getElementById('profileChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['20-30岁年轻人', '其他年龄段'],
+    datasets: [{
+      data: [73, 27],
+      backgroundColor: [pink500, pink200],
+      borderColor: 'white', borderWidth: 3, hoverOffset: 8,
+    }]
+  },
+  options: { ...chartOptions, cutout: '60%', plugins: { ...chartOptions.plugins, legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } } } }
+});
+
+// 5. Identity
+new Chart(document.getElementById('identityChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['视为"孩子"（家人）', '视为"伙伴"', '仅视为"宠物"', '其他'],
+    datasets: [{
+      data: [59.33, 27.95, 8.87, 3.85],
+      backgroundColor: [pink500, sage500, pink200, lavender],
+      borderColor: 'white', borderWidth: 3, hoverOffset: 12,
+    }]
+  },
+  options: { ...chartOptions, cutout: '55%', plugins: { ...chartOptions.plugins, legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true } }, tooltip: { ...chartOptions.plugins.tooltip, callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw}%` } } } }
+});
+
+// 6. Food Concern
+new Chart(document.getElementById('foodConcernChart'), {
+  type: 'radar',
+  data: {
+    labels: ['食材新鲜度', '营养成分', '品牌信誉', '价格合理', '适口性', '安全认证'],
+    datasets: [{
+      label: '关注度 (%)',
+      data: [70.8, 62.3, 58.5, 45.2, 55.6, 50.1],
+      backgroundColor: pink500 + '22', borderColor: pink500, borderWidth: 2,
+      pointBackgroundColor: pink500, pointBorderColor: 'white', pointBorderWidth: 2, pointRadius: 5,
+    }]
+  },
+  options: { ...chartOptions, scales: { r: { beginAtZero: true, max: 80, grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { display: false }, pointLabels: { font: { size: 11 } } } }, plugins: { ...chartOptions.plugins, legend: { display: false } } }
+});
+
+// 7. Fresh Food
+new Chart(document.getElementById('freshFoodChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['选择鲜粮', '未选择鲜粮'],
+    datasets: [{
+      data: [39.2, 60.8],
+      backgroundColor: [sage500, sage300],
+      borderColor: 'white', borderWidth: 3,
+    }]
+  },
+  options: { ...chartOptions, cutout: '60%', plugins: { ...chartOptions.plugins, legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } } } }
+});
+
+// 8. Single
+new Chart(document.getElementById('singleChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['单身养宠者', '家庭养宠者'],
+    datasets: [{
+      data: [41, 59],
+      backgroundColor: [pink500, pink200],
+      borderColor: 'white', borderWidth: 3,
+    }]
+  },
+  options: { ...chartOptions, cutout: '60%', plugins: { ...chartOptions.plugins, legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } } } }
+});
+
+// 9. Spending
+new Chart(document.getElementById('spendingChart'), {
+  type: 'bar',
+  data: {
+    labels: ['单身养宠者', '家庭养宠者'],
+    datasets: [{
+      label: '月均宠物支出（元）',
+      data: [720, 400],
+      backgroundColor: [pink500, sage500],
+      borderRadius: 8, barThickness: 60,
+    }]
+  },
+  options: { ...chartOptions, scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true } }, plugins: { ...chartOptions.plugins, legend: { display: false } } }
+});
+
+// 10. Cat vs Dog Count
+new Chart(document.getElementById('catDogCountChart'), {
+  type: 'bar',
+  data: {
+    labels: ['猫', '狗'],
+    datasets: [{
+      label: '数量（万只）',
+      data: [7289, 5343],
+      backgroundColor: [sage500, warm],
+      borderRadius: 8, barThickness: 60,
+    }]
+  },
+  options: { ...chartOptions, scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true } }, plugins: { ...chartOptions.plugins, legend: { display: false } } }
+});
+
+// 11. Growth
+new Chart(document.getElementById('growthChart'), {
+  type: 'bar',
+  data: {
+    labels: ['猫增速', '狗增速'],
+    datasets: [{
+      label: '同比增长 (%)',
+      data: [5.2, 3.2],
+      backgroundColor: [sage500, warm],
+      borderRadius: 8, barThickness: 60,
+    }]
+  },
+  options: { ...chartOptions, scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true } }, plugins: { ...chartOptions.plugins, legend: { display: false } } }
+});
+</script>
+</body>
+</html>
